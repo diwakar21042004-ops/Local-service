@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Professionals Near You | ProLocal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .providers-hero {
+            background: linear-gradient(135deg, rgba(239, 79, 95, 0.05), var(--bg-main));
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 110px 20px 30px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .providers-hero .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .providers-hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            text-transform: capitalize;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .providers-hero p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0;
+            line-height: 1.5;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+
+        .breadcrumb {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumb a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+        }
+
+        .providers-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px 0;
+            margin-top: -20px;
+        }
+
+        .zomato-filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 0 20px 0;
+            background: var(--bg-main);
+            position: sticky;
+            top: 75px;
+            z-index: 900;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .zomato-filter-bar::-webkit-scrollbar { display: none; }
+
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+        }
+
+        .filter-chip:hover {
+            border-color: rgba(239, 79, 95, 0.4);
+            color: var(--text-main);
+            background: rgba(239, 79, 95, 0.05);
+        }
+
+        .filter-chip.active {
+            background: rgba(239, 79, 95, 0.1);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .filter-chip input[type="checkbox"] {
+            display: none;
+        }
+
+        .dropdown-filter {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            list-style: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            background: var(--bg-alt);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            white-space: nowrap;
+        }
+
+        .dropdown-btn::-webkit-details-marker { display: none; }
+        .dropdown-btn::after {
+            content: '\f078';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 0.8rem;
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-filter[open] .dropdown-btn::after { transform: rotate(180deg); }
+        .dropdown-filter[open] .dropdown-btn { 
+            background: rgba(239, 79, 95, 0.1);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            animation: fadeInDrop 0.2s ease-out;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInDrop { 
+            from { opacity: 0; transform: translateY(-5px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .sort-pill {
+            position: relative;
+            cursor: pointer;
+            display: block;
+        }
+
+        .sort-pill input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .sort-pill-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .sort-pill input[type="radio"]:checked ~ .sort-pill-text {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05));
+            color: var(--primary-color);
+            border-color: rgba(249, 115, 22, 0.4);
+            font-weight: 700;
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.1);
+        }
+
+        .sort-pill:hover .sort-pill-text {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: rgba(249, 115, 22, 0.05);
+        }
+
+        .providers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 35px;
+        }
+
+        .provider-card {
+            background: var(--bg-main);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        .provider-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(249, 115, 22, 0) 0%, rgba(249, 115, 22, 0.03) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .provider-card:hover::before {
+            opacity: 1;
+        }
+
+        .provider-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(249, 115, 22, 0.15);
+            border-color: rgba(249, 115, 22, 0.3);
+        }
+
+        .provider-image-wrapper {
+            position: relative;
+            padding: 15px 15px 0 15px;
+        }
+
+        .provider-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .floating-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: #ea580c;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        [data-theme="dark"] .floating-badge {
+            background: rgba(0,0,0,0.7);
+            color: #fb923c;
+        }
+
+        .provider-content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .provider-header {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .provider-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .provider-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            flex: 1;
+            font-weight: 400;
+        }
+
+        .provider-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-top: 1px dashed var(--border-color);
+            border-bottom: 1px dashed var(--border-color);
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 800;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-value i.fa-star {
+            color: #f59e0b;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ea580c 100%);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-20deg);
+            transition: all 0.6s ease;
+        }
+
+        .book-btn:hover {
+            box-shadow: 0 12px 25px rgba(249, 115, 22, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .book-btn:hover::after {
+            left: 150%;
+        }
+
+        @media (max-width: 900px) {
+            .providers-layout {
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <i class="fa-solid fa-wrench"></i> ProLocal
+            </a>
+            <div class="nav-actions">
+                <button id="darkModeToggle" class="btn-icon" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="providers-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> <i class="fa-solid fa-chevron-right" style="margin: 0 8px; font-size:0.7rem;"></i> <span>Search Results</span>
+            </div>
+            <h1 id="serviceTitle">Top Professionals Near You</h1>
+            <p>We found expert service partners available for booking in your area.</p>
+        </div>
+    </section>
+
+    <div class="container" id="mainContainer">
+        
+        <!-- Step 1: Location Prompt -->
+        <div id="locationPrompt" style="max-width:600px; margin: 60px auto; text-align:center; padding: 40px; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <i class="fa-solid fa-location-dot" style="font-size: 3rem; color: #ef4f5f; margin-bottom: 20px;"></i>
+            <h2 style="margin-bottom: 15px;">Where do you need the service?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">Enter your location to find the best shops and professionals nearby.</p>
+            
+            <form id="locationForm" style="display:flex; gap: 10px; flex-wrap:wrap;">
+                <div style="position: relative; flex:1; min-width:250px;">
+                    <i class="fa-solid fa-location-crosshairs" style="position: absolute; right: 15px; top: 15px; color: var(--primary-color); cursor: pointer; transition: transform 0.3s;" title="Detect Current Location" onclick="this.style.transform='rotate(180deg)'; window.detectLiveLocation('userLocation'); setTimeout(() => this.style.transform='none', 1000);"></i>
+                    <input type="text" id="userLocation" placeholder="Enter your full address or pincode" required style="width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; background: var(--bg-alt); color: var(--text-main);">
+                </div>
+                <button type="submit" class="book-btn" style="width: auto; padding: 15px 25px; flex-shrink:0;">Find Nearby</button>
+            </form>
+        </div>
+
+        <div class="providers-layout" id="providersLayout" style="display:none;">
+            <!-- Filters Bar (Zomato/Horizontal Style) -->
+            <div class="zomato-filter-bar">
+                <details class="dropdown-filter">
+                    <summary class="dropdown-btn">
+                        <i class="fa-solid fa-arrow-down-short-wide" style="color:var(--primary-color);"></i> Sort By
+                    </summary>
+                    <div class="dropdown-content">
+                        <label class="sort-pill">
+                            <input type="radio" name="sort" value="recommended" checked>
+                            <span class="sort-pill-text"><i class="fa-solid fa-thumbs-up"></i> Recommended</span>
+                        </label>
+                        <label class="sort-pill">
+                            <input type="radio" name="sort" value="distance">
+                            <span class="sort-pill-text"><i class="fa-solid fa-location-arrow"></i> Distance</span>
+                        </label>
+                        <label class="sort-pill">
+                            <input type="radio" name="sort" value="rating">
+                            <span class="sort-pill-text"><i class="fa-solid fa-star"></i> Rating</span>
+                        </label>
+                        <label class="sort-pill">
+                            <input type="radio" name="sort" value="price">
+                            <span class="sort-pill-text"><i class="fa-solid fa-indian-rupee-sign"></i> Price</span>
+                        </label>
+                    </div>
+                </details>
+
+                <label class="filter-chip active"><input type="checkbox" checked> Available Now</label>
+                <label class="filter-chip"><input type="checkbox"> Available Today</label>
+                <details class="dropdown-filter">
+                    <summary class="dropdown-btn">
+                        <i class="fa-solid fa-indian-rupee-sign" style="color:var(--primary-color);"></i> Price
+                    </summary>
+                    <div class="dropdown-content">
+                        <label class="sort-pill">
+                            <input type="radio" name="price_range" value="any" checked>
+                            <span class="sort-pill-text">Any Price</span>
+                        </label>
+                        <label class="sort-pill">
+                            <input type="radio" name="price_range" value="under_500">
+                            <span class="sort-pill-text">Under ₹500</span>
+                        </label>
+                        <label class="sort-pill">
+                            <input type="radio" name="price_range" value="500_1000">
+                            <span class="sort-pill-text">₹500 - ₹1000</span>
+                        </label>
+                        <label class="sort-pill">
+                            <input type="radio" name="price_range" value="above_1000">
+                            <span class="sort-pill-text">Above ₹1000</span>
+                        </label>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Providers Grid -->
+            <div class="providers-grid" id="providersGrid">
+                <!-- Provider cards will be injected by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal (Simple simulated form flow) -->
+    <div id="bookingModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+        <div class="modal-content" style="background:var(--bg-main); padding:40px; border-radius:16px; max-width:400px; width:90%; position:relative;">
+            <span class="close-modal" id="closeBookingModal" style="position:absolute; top:20px; right:20px; font-size:1.5rem; cursor:pointer;">&times;</span>
+            <h2 style="margin-bottom:20px;">Confirm Booking</h2>
+            <p id="bookingDetails" style="margin-bottom:20px; color:var(--text-muted);"></p>
+            <form id="confirmBookingForm">
+                <input type="date" required style="width:100%; padding:12px; margin-bottom:15px; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-alt); color:var(--text-main);">
+                <select required style="width:100%; padding:12px; margin-bottom:15px; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-alt); color:var(--text-main);">
+                    <option value="" disabled selected>Select Time Slot</option>
+                    <option value="10:00 AM">10:00 AM - 12:00 PM</option>
+                    <option value="12:00 PM">12:00 PM - 02:00 PM</option>
+                    <option value="04:00 PM">04:00 PM - 06:00 PM</option>
+                </select>
+                <button type="submit" class="book-btn">Confirm Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceCat = urlParams.get('service') || 'General';
+            document.getElementById('serviceTitle').textContent = `Top ${serviceCat} Professionals Near You`;
+
+            // Dynamic Images Based on Service
+            const serviceCatLower = serviceCat.toLowerCase();
+            let categoryKey = 'general';
+            if (serviceCatLower.includes('plumb')) categoryKey = 'plumber';
+            else if (serviceCatLower.includes('elect')) categoryKey = 'electrician';
+            else if (serviceCatLower.includes('carpen')) categoryKey = 'carpenter';
+            else if (serviceCatLower.includes('clean')) categoryKey = 'cleaning';
+            else if (serviceCatLower.includes('medic') || serviceCatLower.includes('doctor')) categoryKey = 'medical';
+            else if (serviceCatLower.includes('labour') || serviceCatLower.includes('construct')) categoryKey = 'labour';
+            else if (serviceCatLower.includes('paint')) categoryKey = 'painter';
+            
+            const categoryImages = {
+                carpenter: {
+                    hero: "url('https://loremflickr.com/1600/900/carpentry,tools,wood')",
+                    profiles: [
+                        "https://loremflickr.com/400/300/carpenter?lock=11",
+                        "https://loremflickr.com/400/300/carpenter?lock=12",
+                        "https://loremflickr.com/400/300/carpenter?lock=13",
+                        "https://loremflickr.com/400/300/carpenter?lock=14"
+                    ]
+                },
+                electrician: {
+                    hero: "url('https://loremflickr.com/1600/900/electrician,wiring')",
+                    profiles: [
+                        "https://loremflickr.com/400/300/electrician?lock=21",
+                        "https://loremflickr.com/400/300/electrician?lock=22",
+                        "https://loremflickr.com/400/300/electrician?lock=23",
+                        "https://loremflickr.com/400/300/electrician?lock=24"
+                    ]
+                },
+                plumber: {
+                    hero: "url('https://loremflickr.com/1600/900/plumber,pipes')",
+                    profiles: [
+                        "https://loremflickr.com/400/300/plumber?lock=31",
+                        "https://loremflickr.com/400/300/plumber?lock=32",
+                        "https://loremflickr.com/400/300/plumber?lock=33",
+                        "https://loremflickr.com/400/300/plumber?lock=34"
+                    ]
+                },
+                cleaning: {
+                    hero: "url('https://loremflickr.com/1600/900/cleaning,housekeeping')",
+                    profiles: [
+                        "https://loremflickr.com/400/300/cleaner?lock=41",
+                        "https://loremflickr.com/400/300/cleaner?lock=42",
+                        "https://loremflickr.com/400/300/cleaner?lock=43",
+                        "https://loremflickr.com/400/300/cleaner?lock=44"
+                    ]
+                },
+                medical: {
+                    hero: "url('https://loremflickr.com/1600/900/hospital,doctor')",
+                    profiles: [
+                        "https://loremflickr.com/400/300/doctor?lock=51",
+                        "https://loremflickr.com/400/300/doctor?lock=52",
+                        "https://loremflickr.com/400/300/doctor?lock=53",
+                        "https://loremflickr.com/400/300/doctor?lock=54"
+                    ]
+                },
+                labour: {
+                    hero: "url('https://loremflickr.com/1600/900/construction,worker')",
+                    profiles: [
+                        "https://loremflickr.com/400/300/construction,worker?lock=61",
+                        "https://loremflickr.com/400/300/construction,worker?lock=62",
+                        "https://loremflickr.com/400/300/construction,worker?lock=63",
+                        "https://loremflickr.com/400/300/construction,worker?lock=64"
+                    ]
+                },
+                painter: {
+                    hero: "url('https://loremflickr.com/1600/900/painting,walls')",
+                    profiles: [
+                        "https://loremflickr.com/400/300/painter?lock=71",
+                        "https://loremflickr.com/400/300/painter?lock=72",
+                        "https://loremflickr.com/400/300/painter?lock=73",
+                        "https://loremflickr.com/400/300/painter?lock=74"
+                    ]
+                },
+                general: {
+                    hero: "url('https://loremflickr.com/1600/900/professional,services')",
+                    profiles: [
+                        "https://loremflickr.com/400/300/professional?lock=81",
+                        "https://loremflickr.com/400/300/professional?lock=82",
+                        "https://loremflickr.com/400/300/professional?lock=83",
+                        "https://loremflickr.com/400/300/professional?lock=84"
+                    ]
+                }
+            };
+            
+            const catAssets = categoryImages[categoryKey] || categoryImages['general'];
+
+            if (catAssets) {
+                const heroSection = document.querySelector('.providers-hero');
+                heroSection.style.backgroundImage = `linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(0, 0, 0, 0.6)), ${catAssets.hero}`;
+                heroSection.style.backgroundSize = 'cover';
+                heroSection.style.backgroundPosition = 'center';
+            }
+
+            // Dummy profiles
+            let dummies = [
+                { name: "SuperFix Co.", rating: 4.9, reviews: 124, distanceNum: 1.2, distance: "1.2 km", priceNum: 600, price: "₹600", avail: "Available in 30 mins", img: catAssets ? catAssets.profiles[0] : "https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
+                { name: "Elite Experts", rating: 4.7, reviews: 89, distanceNum: 2.5, distance: "2.5 km", priceNum: 450, price: "₹450", avail: "Available Today", img: catAssets ? catAssets.profiles[1] : "https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
+                { name: "Quick Response Team", rating: 4.8, reviews: 210, distanceNum: 3.1, distance: "3.1 km", priceNum: 500, price: "₹500", avail: "Available Now", img: catAssets ? catAssets.profiles[2] : "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
+                { name: "Pro Local Services", rating: 4.6, reviews: 54, distanceNum: 4.0, distance: "4.0 km", priceNum: 400, price: "₹400", avail: "Available Tomorrow", img: catAssets ? catAssets.profiles[3] : "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" }
+            ];
+
+            const grid = document.getElementById('providersGrid');
+
+            function renderGrid(data) {
+                grid.innerHTML = '';
+                data.forEach(pro => {
+                    const card = document.createElement('div');
+                    card.className = 'provider-card';
+                    card.innerHTML = `
+                        <div class="provider-image-wrapper">
+                            <img src="${pro.img}" alt="${pro.name}" class="provider-image">
+                            <div class="floating-badge"><i class="fa-solid fa-crown"></i> PRO</div>
+                        </div>
+                        <div class="provider-content">
+                            <div class="provider-header">
+                                <h3 class="provider-title">${pro.name}</h3>
+                            </div>
+                            <p class="provider-desc">${serviceCat} services with verified expertise. ${pro.avail}.</p>
+                            <div class="provider-stats">
+                                <div class="stat">
+                                    <span class="stat-value"><i class="fa-solid fa-star"></i> ${pro.rating}</span>
+                                    <span class="stat-label">${pro.reviews} Reviews</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value"><i class="fa-solid fa-location-dot"></i> ${pro.distance}</span>
+                                    <span class="stat-label">Distance</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">${pro.price}</span>
+                                    <span class="stat-label">Min. Charge</span>
+                                </div>
+                            </div>
+                            <button class="book-btn" onclick="openBooking('${pro.name}')">Book Appointment</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            // Initial render
+            renderGrid(dummies);
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                const openDetails = document.querySelectorAll('details.dropdown-filter[open]');
+                openDetails.forEach(details => {
+                    if (!details.contains(e.target)) {
+                        details.removeAttribute('open');
+                    }
+                });
+            });
+
+            // Sorting logic
+            const sortRadios = document.querySelectorAll('input[name="sort"]');
+            sortRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const val = e.target.value;
+                    let sortedData = [...dummies];
+
+                    if (val === 'distance') {
+                        sortedData.sort((a, b) => a.distanceNum - b.distanceNum); // Nearest first
+                    } else if (val === 'rating') {
+                        sortedData.sort((a, b) => b.rating - a.rating); // Highest rated first
+                    } else if (val === 'price') {
+                        sortedData.sort((a, b) => a.priceNum - b.priceNum); // Lowest price first
+                    } else if (val === 'recommended') {
+                        // Original order represents our specific algorithm for recommendation
+                        sortedData = [...dummies];
+                    }
+
+                    renderGrid(sortedData);
+                });
+            });
+
+            // Theme toggle
+            const toggleButton = document.getElementById('darkModeToggle');
+            const toggleIcon = toggleButton.querySelector('i');
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                toggleIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+            toggleButton.addEventListener('click', () => {
+                let theme = document.documentElement.getAttribute('data-theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                    toggleIcon.classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    toggleIcon.classList.replace('fa-moon', 'fa-sun');
+                }
+            });
+
+            // Booking Modal logic
+            const modal = document.getElementById('bookingModal');
+            const closeBtn = document.getElementById('closeBookingModal');
+            
+            window.openBooking = function(name) {
+                window.location.href = 'book-appointment.html?provider=' + encodeURIComponent(name) + '&service=' + encodeURIComponent(serviceCat);
+            };
+
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            };
+
+            document.getElementById('confirmBookingForm').onsubmit = function(e) {
+                e.preventDefault();
+                alert('Appointment Booked Successfully! The professional will arrive at the scheduled time.');
+                modal.style.display = 'none';
+                window.location.href = 'index.html';
+            };
+
+            // Location Prompt Logic
+            const locationForm = document.getElementById('locationForm');
+            const locationPrompt = document.getElementById('locationPrompt');
+            const providersLayout = document.getElementById('providersLayout');
+
+            if (locationForm) {
+                locationForm.addEventListener('submit', (e) => {
+                    if (e) e.preventDefault();
+                    // Proceed to show providers
+                    locationPrompt.style.display = 'none';
+                    providersLayout.style.display = 'flex';
+                    
+                    // Update Title to reflect location
+                    const loc = document.getElementById('userLocation').value;
+                    if (loc && loc.trim() !== '') {
+                        localStorage.setItem('userPincode', loc.trim());
+                    }
+                    
+                    const prevTitle = document.getElementById('serviceTitle').textContent;
+                    if (!prevTitle.includes('in') && loc.trim() !== '') {
+                        document.getElementById('serviceTitle').textContent = prevTitle + ' in ' + loc;
+                    }
+                });
+            }
+
+            // Auto Location Check Logic 
+            const savedPincode = localStorage.getItem('userPincode');
+            if (savedPincode) {
+                const locInput = document.getElementById('userLocation');
+                if (locInput) {
+                    locInput.value = savedPincode;
+                    // Trigger the form submission logic manually
+                    locationPrompt.style.display = 'none';
+                    providersLayout.style.display = 'flex';
+                    document.getElementById('serviceTitle').textContent = `Top ${serviceCat} Professionals Near You in ${savedPincode}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

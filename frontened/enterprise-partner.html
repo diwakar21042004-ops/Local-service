@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProLocal Enterprise | Partner With Us</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none; color:inherit;"><i class="fa-solid fa-wrench"></i>
+                    ProLocal <span style="font-weight: 300; font-size: 0.8em; margin-left: 5px;">ENTERPRISE</span></a>
+            </div>
+
+            <div class="nav-actions" style="display:flex; gap:10px; align-items:center;">
+                <button id="darkModeToggle" class="btn-icon" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="profile-dropdown">
+                    <button class="profile-btn" id="profileBtn" onclick="window.location.href='enterprise-login.html';"
+                        style="border: none; background: transparent; padding: 10px; font-weight: 500; font-size: 1.05rem; cursor: pointer;">
+                        <i class="fa-regular fa-circle-user" style="font-size: 1.3rem;"></i> <span
+                            id="profileName">Login</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <style>
+        .partner-hero {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+            padding-bottom: 200px;
+            text-align: center;
+        }
+
+        .partner-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .zero-commission-badge {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 25px;
+            border-radius: 40px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .zero-commission-badge i {
+            color: #2874f0;
+            font-size: 1.5rem;
+            background: rgba(40, 116, 240, 0.15);
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .badge-text {
+            text-align: left;
+        }
+
+        .badge-text strong {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .badge-text span {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .register-btn {
+            background-color: #2874f0;
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            display: inline-block;
+        }
+
+        .register-btn:hover {
+            background-color: #1a5ac8;
+        }
+
+        .hero-bottom-card {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 12px;
+            padding: 30px 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        [data-theme="dark"] .hero-bottom-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero-bottom-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .hero-bottom-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .check-item i {
+            color: #24963f;
+        }
+
+        .section-divider {
+            position: relative;
+            text-align: center;
+            margin: 80px 0 60px;
+            color: var(--text-main);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border-color);
+            z-index: -1;
+        }
+
+        .section-divider span {
+            background: var(--bg-main);
+            padding: 0 40px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .benefit-card {
+            padding: 20px;
+        }
+
+        .benefit-card .icon-blue {
+            font-size: 2.5rem;
+            color: #2874f0;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .benefit-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .partner-stories {
+            background-color: var(--bg-alt);
+            padding: 80px 0;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .story-card {
+            background: var(--bg-main);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .story-card p {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .story-author img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info strong {
+            display: block;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .author-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .enterprise-form-card {
+            background: var(--bg-main);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            padding: 50px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+            transition: var(--transition);
+        }
+
+        .enterprise-form-card:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 18px 20px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-alt);
+            color: var(--text-main);
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .input-group select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 40px;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #2874f0;
+            box-shadow: 0 0 0 4px rgba(40, 116, 240, 0.1);
+            background: var(--bg-main);
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            font-size: 1.05rem;
+        }
+
+        .input-group input:focus~label,
+        .input-group input:valid~label {
+            top: -10px;
+            left: 15px;
+            font-size: 0.85rem;
+            background: var(--bg-main);
+            padding: 0 5px;
+            color: #2874f0;
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn-lg {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #2874f0 0%, #0d4eb5 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(40, 116, 240, 0.2);
+            margin-top: 10px;
+        }
+
+        .submit-btn-lg:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(40, 116, 240, 0.3);
+        }
+
+        @media(max-width: 900px) {
+
+            .checklist-grid,
+            .benefits-grid,
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-bottom-card {
+                position: relative;
+                bottom: 0;
+                margin-top: 40px;
+                flex-direction: column;
+            }
+
+            .partner-hero {
+                padding-bottom: 80px;
+            }
+
+            .section-divider span {
+                padding: 0 10px;
+                font-size: 1.5rem;
+            }
+        }
+
+        .faq-section {
+            padding: 80px 0;
+            background-color: var(--bg-main);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--text-main);
+            margin-bottom: 50px;
+            font-weight: 600;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: var(--bg-main);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item summary {
+            padding: 20px 25px;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: '\f107';
+            /* FontAwesome angle-down */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-item p {
+            padding: 0 25px 20px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Zomato-style Footer Override */
+        .footer {
+            background-color: #000000 !important;
+            color: #bdbdbd !important;
+            padding: 50px 0 20px !important;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .footer-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 40px !important;
+        }
+
+        .footer-logo h2 {
+            color: #eae9e9 !important;
+            font-weight: 800;
+            font-size: 2rem;
+            font-style: italic;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .footer-top::after {
+            content: none;
+        }
+
+        .footer h4 {
+            color: #f4f2f2 !important;
+            font-size: 0.85rem !important;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 15px !important;
+        }
+
+        .footer ul li a {
+            color: #e3e1e1 !important;
+            font-size: 0.9rem !important;
+        }
+
+        .footer ul li a:hover {
+            color: #8ccac9 !important;
+            text-decoration: none;
+        }
+
+        .social-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-col h4 {
+            margin-bottom: 5px !important;
+        }
+
+        .social-links {
+            justify-content: flex-start !important;
+        }
+
+        .social-links a {
+            color: #ffffff !important;
+            background: #1c1c1c;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.9rem;
+        }
+
+        .footer-divider {
+            border-top: 1px solid #e8e8e8 !important;
+            margin: 20px 0 !important;
+        }
+
+        .footer-bottom p {
+            color: #8c8c8c !important;
+            font-size: 0.75rem !important;
+        }
+    </style>
+
+    <section class="partner-hero"
+        style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        <div class="partner-hero-content">
+            <h1>Partner with ProLocal and<br>grow your business</h1>
+            <div class="zero-commission-badge">
+                <i class="fa-solid fa-percent"></i>
+                <div class="badge-text">
+                    <strong>0% commission for 1st month!</strong>
+                    <span>*only valid for new enterprise partners</span>
+                </div>
+            </div>
+            <br>
+            <a href="#register" class="btn btn-primary register-btn">Register your business</a>
+
+            <div class="hero-bottom-card">
+                <div class="hero-bottom-text">
+                    <h3>Get started: It only takes 10 minutes</h3>
+                    <p>Please keep these documents and details ready for a smooth sign-up</p>
+                    <div class="checklist-grid">
+                        <div class="check-item"><i class="fa-solid fa-circle-check"></i> Company registration</div>
+                        <div class="check-item"><i class="fa-solid fa-circle-check"></i> GST number, if applicable</div>
+                        <div class="check-item"><i class="fa-solid fa-circle-check"></i> Service menu & pricing</div>
+                        <div class="check-item"><i class="fa-solid fa-circle-check"></i> ID & Address Proof</div>
+                        <div class="check-item"><i class="fa-solid fa-circle-check"></i> Bank account details</div>
+                    </div>
+                </div>
+                <div class="hero-bottom-video" style="display: flex; align-items: center;">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                        alt="Video Placeholder" style="border-radius: 8px; width: 200px; opacity: 0.9;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="partner-why section">
+        <div class="container">
+            <h2 class="section-divider"><span>Why should you partner with ProLocal?</span></h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fa-solid fa-users icon-blue"></i>
+                    <h3>Attract new customers</h3>
+                    <p>Reach millions of people ordering services on ProLocal daily.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fa-solid fa-calendar-check icon-blue"></i>
+                    <h3>Doorstep convenience</h3>
+                    <p>Easily get your orders delivered through our trained delivery partners.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fa-solid fa-envelope icon-blue"></i>
+                    <h3>Onboarding support</h3>
+                    <p>For any support, email us at onboarding@prolocal.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="register-section section" id="register" style="background: var(--bg-alt);">
+        <div class="container" style="max-width: 700px;">
+            <div class="enterprise-form-card">
+                <div class="form-header">
+                    <h2>Register your business</h2>
+                    <p>Partner with us and reach thousands of new customers daily.</p>
+                </div>
+
+                <form
+                    onsubmit="event.preventDefault(); alert('Registration submitted successfully! Our verification team will contact you shortly. Redirecting to login...'); this.reset(); location.href='enterprise-login.html';">
+                    <div class="input-group">
+                        <input type="text" id="businessName" required>
+                        <label for="businessName">Business or Company Name</label>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <input type="text" id="ownerFirst" required>
+                            <label for="ownerFirst">Owner First Name</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="ownerLast" required>
+                            <label for="ownerLast">Owner Last Name</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="email" id="businessEmail" required>
+                        <label for="businessEmail">Business Email Address</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="tel" id="businessPhone" required>
+                        <label for="businessPhone">Mobile Number (for OTP)</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" id="businessLocation" required>
+                        <label for="businessLocation">Business Location / City</label>
+                    </div>
+
+                    <div class="input-group">
+                        <select required id="serviceCat">
+                            <option value="" disabled selected>Select Primary Service Category</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="electrical">Electrical & Wiring</option>
+                            <option value="cleaning">Home Cleaning</option>
+                            <option value="medical">Medical Support</option>
+                            <option value="labor">Labour & Construction</option>
+                            <option value="carpentry">Carpentry</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-btn-lg">Submit Application <i class="fa-solid fa-arrow-right"
+                            style="margin-left: 8px;"></i></button>
+
+                    <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 20px;">
+                        By submitting this form, you agree to our <a href="info.html?p=terms"
+                            style="color: #2874f0;">Enterprise Terms</a>.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="partner-stories">
+        <div class="container">
+            <h2
+                style="text-align: center; margin-bottom: 50px; font-weight: 700; color: var(--text-main); font-size: 2rem;">
+                Business success stories</h2>
+            <div class="stories-grid">
+                <div class="story-card">
+                    <p>"ProLocal enabled me to restart my operations post-COVID when I had no hope of doing my business
+                        again. I'm grateful to the platform for helping me thrive. My online service business has taken
+                        off!"</p>
+                    <div class="story-author">
+                        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                            alt="Arshad">
+                        <div class="author-info">
+                            <strong>Arshad Khan</strong>
+                            <span>Owner - Khan Repairs</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-card">
+                    <p>"Thanks to ProLocal's invaluable support, our startup has been doing wonders in the competitive
+                        service landscape. Their dedication to promoting local businesses has been essential in our
+                        journey."</p>
+                    <div class="story-author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                            alt="Vijay">
+                        <div class="author-info">
+                            <strong>Vijay M.</strong>
+                            <span>Owner - Pro Cleaning</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-card">
+                    <p>"ProLocal helped us grow by 60% since registration, and we are one of the biggest service
+                        enterprises in the state now. Highly recommend partnering with ProLocal for growth."</p>
+                    <div class="story-author">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                            alt="Sandeep">
+                        <div class="author-info">
+                            <strong>Sandeep K.</strong>
+                            <span>Owner - SK Builders</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container faq-container">
+            <h2 class="faq-title">Frequently asked questions</h2>
+
+            <details class="faq-item">
+                <summary>What are the documents and details required to start receiving bookings through ProLocal?
+                </summary>
+                <p>You will need your basic business registration, GST details (if applicable), banking information for
+                    payouts, and proof of address and identity for verification.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>How long will it take for my business to go live on ProLocal after submitting the documents?
+                </summary>
+                <p>Once all mandatory documents are submitted and verified, it usually takes between 24 to 48 hours for
+                    your enterprise profile to become active and visible to customers.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>What is the one-time onboarding fee? Do I have to pay it at the time of registration?</summary>
+                <p>The onboarding fee varies depending on your service category. It does not need to be paid
+                    immediately; it can be deducted from your first few successful payouts.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>How can I get help and support from ProLocal if I get stuck?</summary>
+                <p>Our dedicated enterprise support team is available 24/7. You can contact your assigned Key Account
+                    Manager or email onboarding@prolocal.com for immediate assistance.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>How much commission will I be charged by ProLocal?</summary>
+                <p>We are currently offering a 0% commission period for your first month. After that, commission rates
+                    range from 5% to 15% depending on the specific service category and volume.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>How will I get my payouts?</summary>
+                <p>Payouts are automatically processed on a weekly basis directly to the bank account you provide during
+                    registration.</p>
+            </details>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <h2><i>ProLocal</i></h2>
+                </div>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>ProLocal</h4>
+                    <ul>
+                        <li><a href="info.html?p=who-we-are">Who We Are</a></li>
+                        <li><a href="info.html?p=blog">Blog</a></li>
+                        <li><a href="info.html?p=work-with-us">Work With Us</a></li>
+                        <li><a href="info.html?p=investor-relations">Investor Relations</a></li>
+                        <li><a href="info.html?p=report-fraud">Report Fraud</a></li>
+                        <li><a href="info.html?p=contact-us">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>For Professionals</h4>
+                    <ul>
+                        <li><a href="info.html?p=partner-us">Partner With Us</a></li>
+                        <li><a href="info.html?p=apps-for-you">Apps For You</a></li>
+                        <li><a href="info.html?p=consulting">Consulting</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Learn More</h4>
+                    <ul>
+                        <li><a href="info.html?p=privacy">Privacy</a></li>
+                        <li><a href="info.html?p=security">Security</a></li>
+                        <li><a href="info.html?p=terms">Terms of Service</a></li>
+                        <li><a href="info.html?p=help">Help & Support</a></li>
+                        <li><a href="info.html?p=sitemap">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col social-col">
+                    <h4>Social Links</h4>
+                    <div class="social-links" style="display: flex; gap: 8px;">
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+
+                    <div class="app-badges" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                        <a href="#" style="display: inline-block;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                                alt="App Store" style="height: 35px;">
+                        </a>
+                        <a href="#" style="display: inline-block;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                                alt="Google Play" style="height: 35px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and
+                    Content Policies. All trademarks are properties of their respective owners.<br>2008-2026 &copy;
+                    ProLocal&trade; Ltd. All rights reserved.</p>
+                <p style="text-align: center; margin-top: 15px; font-weight: 500; color: #8c8c8c;">Designed and developed with &hearts; by Diwakar</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

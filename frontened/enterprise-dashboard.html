@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Dashboard - ProLocal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: var(--bg-alt);
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-main);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-style: italic;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0 12px;
+            margin: 0;
+            flex: 1;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover {
+            background: var(--bg-alt);
+            color: var(--text-main);
+        }
+
+        .sidebar-menu a.active {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu a i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ef4444;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .topbar-greeting h2 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--text-main);
+        }
+
+        .topbar-greeting p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-widget {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .profile-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .dashboard-content {
+            padding: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-main);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-info p {
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .stat-info h3 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .icon-orange {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--primary-color);
+        }
+
+        .icon-blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .icon-green {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .icon-purple {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+
+        /* Tables and Sections */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .recent-bookings {
+            background: var(--bg-main);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+
+        .status-badge.completed {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .status-badge.cancelled {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="enterprise-partner.html" class="sidebar-logo">
+                <i class="fa-solid fa-wrench"></i>
+                ProLocal <span style="font-weight: 300; font-size: 0.7em;">ENTERPRISE</span>
+            </a>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fa-solid fa-calendar-check"></i> Bookings</a></li>
+            <li><a href="#"><i class="fa-solid fa-list"></i> Services Menu</a></li>
+            <li><a href="#"><i class="fa-solid fa-wallet"></i> Earnings</a></li>
+            <li><a href="#"><i class="fa-solid fa-star"></i> Reviews</a></li>
+            <li><a href="#"><i class="fa-solid fa-user-circle"></i> Profile</a></li>
+            <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="enterprise-login.html" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-greeting">
+                <h2>Welcome back, diwakar!</h2>
+                <p>Here's what's happening with your business today.</p>
+            </div>
+            <div class="topbar-actions">
+                <button class="btn-icon" aria-label="Notifications"
+                    style="background:transparent; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-main);">
+                    <i class="fa-regular fa-bell"></i>
+                </button>
+                <div class="profile-widget">
+                    <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                        alt="Admin" class="profile-img">
+                    <div class="profile-info">
+                        <strong>Diwakar</strong>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <p>Total Earnings</p>
+                        <h3>₹24,500</h3>
+                    </div>
+                    <div class="stat-icon icon-green">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <p>Active Bookings</p>
+                        <h3>12</h3>
+                    </div>
+                    <div class="stat-icon icon-blue">
+                        <i class="fa-solid fa-calendar"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <p>Profile Views</p>
+                        <h3>486</h3>
+                    </div>
+                    <div class="stat-icon icon-purple">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <p>Avg Rating</p>
+                        <h3>4.8 <span style="font-size: 1rem; color: #f59e0b;"><i class="fa-solid fa-star"></i></span>
+                        </h3>
+                    </div>
+                    <div class="stat-icon icon-orange">
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div class="recent-bookings">
+                <div class="section-header">
+                    <h3>Recent Bookings</h3>
+                    <a href="#" class="btn btn-secondary btn-sm"
+                        style="text-decoration:none; display:inline-block; border-radius:8px; background:var(--bg-alt); color:var(--text-main); font-weight:600;">View
+                        All</a>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Service</th>
+                                <th>Date & Time</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD-8942</td>
+                                <td>Priya Sharma</td>
+                                <td>AC Servicing</td>
+                                <td>Today, 02:00 PM</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>₹850</td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-8941</td>
+                                <td>Rahul Verma</td>
+                                <td>Plumbing Repair</td>
+                                <td>Today, 10:30 AM</td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                                <td>₹400</td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-8940</td>
+                                <td>Anjali Nair</td>
+                                <td>House Cleaning</td>
+                                <td>Yesterday, 04:00 PM</td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                                <td>₹1,200</td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-8939</td>
+                                <td>Vikram Singh</td>
+                                <td>Electrical Wiring</td>
+                                <td>Yesterday, 11:00 AM</td>
+                                <td><span class="status-badge cancelled">Cancelled</span></td>
+                                <td>₹300</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

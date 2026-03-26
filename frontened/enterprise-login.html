@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Login - ProLocal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: var(--bg-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .split-layout {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .left-panel {
+            flex: 1.2;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            color: white;
+            position: relative;
+        }
+
+        .left-panel-content {
+            max-width: 500px;
+            z-index: 2;
+        }
+
+        .left-panel h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .left-panel p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .right-panel {
+            flex: 1;
+            background-color: var(--bg-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .login-logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-size: 1.05rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.1);
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            background: var(--bg-main);
+            padding: 0 5px;
+        }
+
+        .input-group input:focus+label,
+        .input-group input:not(:placeholder-shown)+label {
+            top: 0;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            width: 100%;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.25);
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(249, 115, 22, 0.35);
+        }
+
+        .forgot-password {
+            display: block;
+            margin-top: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 35px 0;
+            color: var(--text-muted);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .create-account {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .create-account a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            padding-left: 5px;
+        }
+
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .back-link:hover {
+            color: var(--primary-hover);
+        }
+
+        .badges {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+        }
+        
+        @media(max-width: 900px) {
+            .left-panel {
+                display: none;
+            }
+            .back-link {
+                color: var(--text-main);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="split-layout">
+        <a href="enterprise-partner.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Enterprise</a>
+        
+        <div class="left-panel">
+            <div class="left-panel-content">
+                <h1>Grow your business with ProLocal Enterprise.</h1>
+                <p>Join thousands of local service professionals who use our platform to manage bookings, track growth, and scale operations effortlessly.</p>
+                <div class="badges">
+                    <div class="badge"><i class="fa-solid fa-chart-line"></i> Dashboard Insights</div>
+                    <div class="badge"><i class="fa-solid fa-calendar-check"></i> Smart Booking</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="login-container">
+                <div class="login-logo">
+                    <i class="fa-solid fa-wrench"></i> ProLocal <span style="font-weight: 300; font-size: 0.7em;">ENTERPRISE</span>
+                </div>
+                <p class="login-subtitle">Sign in to your enterprise dashboard</p>
+
+                <form action="enterprise-dashboard.html" onsubmit="event.preventDefault(); alert('Login successful! Redirecting to Enterprise Dashboard...'); location.href='enterprise-dashboard.html';">
+                    <div class="input-group">
+                        <input type="text" id="loginEmail" required placeholder=" ">
+                        <label for="loginEmail">Email Address or Phone Number</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="loginPassword" required placeholder=" ">
+                        <label for="loginPassword">Password</label>
+                    </div>
+
+                    <button type="submit" class="login-btn">Secure Login <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></button>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </form>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <p class="create-account">Don't have an enterprise account?<a href="enterprise-partner.html#register">Register here</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProLocal Services | Expert Local Service at Your Doorstep</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <i class="fa-solid fa-wrench"></i> ProLocal
+            </div>
+            <nav class="nav-links">
+            </nav>
+            <div class="nav-actions" style="display:flex; gap:10px; align-items:center;">
+                <button id="darkModeToggle" class="btn-icon" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="profile-dropdown">
+                    <button class="profile-btn" id="profileBtn"
+                        style="border: none; background: transparent; padding: 10px; font-weight: 500; font-size: 1.05rem;">
+                        <i class="fa-regular fa-circle-user" style="font-size: 1.3rem;"></i> <span
+                            id="profileName">Login</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.7em;"></i>
+                    </button>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <div class="dropdown-header">
+                            <span class="new-customer">New customer?</span>
+                            <a href="#" class="signup-link">Sign Up</a>
+                        </div>
+                        <a href="#" class="dropdown-item" id="authBtn">
+                            <i class="fa-regular fa-circle-user"></i> My Profile
+                        </a>
+                        <a href="my-bookings.html" class="dropdown-item">
+                            <i class="fa-solid fa-box-open"></i> My Booking
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa-regular fa-heart"></i> Wishlist
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa-solid fa-gift"></i> Rewards
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa-solid fa-credit-card"></i> Gift Cards
+                        </a>
+                    </div>
+                </div>
+
+                <div class="profile-dropdown">
+                    <button class="profile-btn"
+                        style="border: none; background: transparent; padding: 10px; font-weight: 500; font-size: 1.05rem;">
+                        <span>More</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 0.7em;"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" class="dropdown-item">
+                            <i class="fa-solid fa-store"></i> Become a Professional
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa-regular fa-bell"></i> Notification Settings
+                        </a>
+                        <a href="#contact" class="dropdown-item">
+                            <i class="fa-solid fa-headset"></i> 24x7 Customer Care
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa-solid fa-chart-line"></i> Advertise
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa-solid fa-download"></i> Download App
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <img class="hero-video" src="img-hero.png" alt="Premium Expertise Background">
+        <div class="hero-video-overlay"></div>
+        <div class="hero-content">
+            <h1>Expert Local Services <br><span class="highlight">At Your Doorstep</span></h1>
+            <p>Reliable plumbing, electrical, cleaning, and handyman services by certified professionals. Quick,
+                affordable, and fully guaranteed.</p>
+            <div class="hero-actions">
+                <a href="#services" class="btn btn-primary">Our Services</a>
+                <a href="#contact" class="btn btn-secondary">Get a Quote</a>
+            </div>
+        </div>
+    </section>
+    <style>
+        .quick-categories {
+            padding: 60px 0 20px 0;
+            background: var(--bg-main);
+            text-align: center;
+        }
+
+        .quick-categories-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-main);
+        }
+
+        .quick-categories-grid {
+            display: flex;
+            gap: 35px;
+            overflow-x: auto;
+            padding-top: 20px;
+            margin-top: -20px;
+            padding-bottom: 25px;
+            scrollbar-width: none;
+            justify-content: flex-start;
+        }
+
+        @media (min-width: 900px) {
+            .quick-categories-grid {
+                flex-wrap: nowrap;
+                justify-content: flex-start; /* Fallback */
+                justify-content: safe center;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px 20px 25px 20px;
+                margin-top: -20px;
+            }
+        }
+
+        .quick-categories-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .quick-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            min-width: 105px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .quick-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--bg-alt);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #ef4f5f;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+
+        .quick-item:hover .quick-icon {
+            transform: translateY(-8px) scale(1.05);
+            background: #ef4f5f;
+            color: #ffffff;
+            box-shadow: 0 12px 25px rgba(239, 79, 95, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .quick-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            transition: color 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .quick-item:hover .quick-text {
+            color: #ef4f5f;
+        }
+    </style>
+
+    <section class="quick-categories">
+        <div class="container">
+            <h3 class="quick-categories-title">All Services</h3>
+            <div class="quick-categories-grid">
+                <div class="quick-item" onclick="openPincodeModal('Plumbing')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-plumb.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Plumbing"></div>
+                    <span class="quick-text">Plumbing</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('Electrical')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-elec.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Electrical"></div>
+                    <span class="quick-text">Electrical</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('Cleaning')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-clean.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Cleaning"></div>
+                    <span class="quick-text">Cleaning</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('Carpenter')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-carp.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Carpenter"></div>
+                    <span class="quick-text">Carpenter</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('Painting')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-paint.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Painting"></div>
+                    <span class="quick-text">Painting</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('AC Repair')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-ac.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="AC Repair"></div>
+                    <span class="quick-text">AC Repair</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('Pest Control')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-pest.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Pest Control"></div>
+                    <span class="quick-text">Pest Control</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('Salon')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-salon.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Salon"></div>
+                    <span class="quick-text">Salon</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('Medical')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-med.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Medical"></div>
+                    <span class="quick-text">Medical</span>
+                </div>
+                <div class="quick-item" onclick="openPincodeModal('Labour')">
+                    <div class="quick-icon" style="padding:0; overflow:hidden; border:none;"><img src="img-lab.png"
+                            style="width:100%; height:100%; object-fit:cover;" alt="Labour"></div>
+                    <span class="quick-text">Labour</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services section">
+        <div class="container">
+            <div class="section-title" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="section-title-content" style="text-align: center;">
+                    <h2>Our Premium Services</h2>
+                    <p>We provide top-notch services for your home and office with trained professionals.</p>
+                </div>
+                <div id="premiumLocationDisplay"
+                    style="margin-top:15px; display:inline-flex; align-items:center; gap:8px; font-size:0.95rem; font-weight:600; color: #ef4f5f; background: rgba(239, 79, 95, 0.1); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.3s ease;"
+                    onclick="changePincodeGeneral()" onmouseover="this.style.background='rgba(239, 79, 95, 0.2)'"
+                    onmouseout="this.style.background='rgba(239, 79, 95, 0.1)'">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span id="currentPincodeLabel">Global Location</span>
+                    <span style="font-size:0.8rem; text-decoration:underline; opacity:0.8;">(Change)</span>
+                </div>
+            </div>
+            <div class="premium-services-grid">
+                <div class="service-card-compact" onclick="openPincodeModal('Plumbing')">
+                    <div class="scc-image" style="background-image: url('img-plumb.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-droplet" style="color: #3b82f6;"></i> Plumbing</h3>
+                        <p>Pipe repairs, leak fixes, and complete installations.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('Electrical')">
+                    <div class="scc-image" style="background-image: url('img-elec.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-plug" style="color: #eab308;"></i> Electrical</h3>
+                        <p>Safe wiring, fixtures, and rapid troubleshooting.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('Cleaning')">
+                    <div class="scc-image" style="background-image: url('img-clean.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-broom" style="color: #10b981;"></i> Cleaning</h3>
+                        <p>Professional home and office deep cleaning services.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('Carpenter')">
+                    <div class="scc-image" style="background-image: url('img-carp.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-hammer" style="color: #8b5cf6;"></i> Carpenter</h3>
+                        <p>Custom woodworking and structural furniture repairs.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('Medical')">
+                    <div class="scc-image" style="background-image: url('img-med.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-user-doctor" style="color: #ef4f5f;"></i> Medical</h3>
+                        <p>Home health checkups, nursing, and medical support.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('Labour')">
+                    <div class="scc-image" style="background-image: url('img-lab.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-helmet-safety" style="color: #f59e0b;"></i> Labour</h3>
+                        <p>General labor, moving assistance, and heavy lifting.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('Painting')">
+                    <div class="scc-image" style="background-image: url('img-paint.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-paint-roller" style="color: #06b6d4;"></i> Painting</h3>
+                        <p>Interior, exterior walls, and detail painting jobs.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('AC Repair')">
+                    <div class="scc-image" style="background-image: url('img-ac.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-snowflake" style="color: #3b82f6;"></i> AC Repair</h3>
+                        <p>Air conditioning servicing, gas refill, and installation.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('Pest Control')">
+                    <div class="scc-image" style="background-image: url('img-pest.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-bug-slash" style="color: #64748b;"></i> Pest Control</h3>
+                        <p>Termite, rodents, and general insect extermination.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <div class="service-card-compact" onclick="openPincodeModal('Salon')">
+                    <div class="scc-image" style="background-image: url('img-salon.png');">
+                        <div class="scc-badge">Premium</div>
+                    </div>
+                    <div class="scc-content">
+                        <h3><i class="fa-solid fa-scissors" style="color: #ec4899;"></i> Salon</h3>
+                        <p>Premium grooming, haircuts, and spa packages at home.</p>
+                        <div class="scc-action"><span>Book Now</span><i class="fa-solid fa-arrow-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section id="about" class="about section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Why Choose ProLocal?</h2>
+                    <p>We have been serving our community with dedication and excellence for over a decade. Our
+                        professionals are vetted, certified, and committed to providing 100% satisfaction.</p>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-check-circle"></i> Certified Professionals</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Transparent Pricing</li>
+                        <li><i class="fa-solid fa-check-circle"></i> 24/7 Emergency Support</li>
+                        <li><i class="fa-solid fa-check-circle"></i> 100% Satisfaction Guarantee</li>
+                    </ul>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">5000+</span>
+                        <span class="stat-label">Jobs Completed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.9/5</span>
+                        <span class="stat-label">Customer Rating</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="app-download-section section">
+        <div class="container">
+            <div class="app-download-card">
+                <div class="app-download-content">
+                    <h2>Download the app now!</h2>
+                    <p>Experience seamless local service booking only on the ProLocal app.</p>
+                    <div class="app-download-buttons">
+                        <a href="#" class="store-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                                alt="Get it on Google Play">
+                        </a>
+                        <a href="#" class="store-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                                alt="Download on the App Store">
+                        </a>
+                    </div>
+                </div>
+                <div class="app-download-image">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <p class="qr-text">Scan the QR code to<br>download the app</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg"
+                                alt="QR Code" class="qr-code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awesome App Promo Interactive Section -->
+    <section class="app-features-promo">
+        <div class="container" style="text-align: center; position: relative;">
+            <h2
+                style="color: #ef4f5f; font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -0.5px;">
+                What's waiting for you<br>on the app?</h2>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 50px;">Our app is
+                packed with features that enable you to experience home services like never before</p>
+
+            <div class="promo-frame-container">
+                <!-- CSS Phone Mockup -->
+                <div class="css-smartphone">
+                    <div class="css-notch"></div>
+                    <div class="css-screen">
+                        <!-- Central Inner Card -->
+                        <div class="float-card center-highlight-card">
+                            <div class="fc-icon"><i class="fa-solid fa-calendar-check" style="color: #ef4f5f;"></i>
+                            </div>
+                            <span class="fc-text">Schedule<br>your service</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Orbiting Cards -->
+                <div class="float-card fc-1">
+                    <div class="fc-icon"><i class="fa-solid fa-shield-halved" style="color: #10b981;"></i></div>
+                    <span class="fc-text">Safe & Secure</span>
+                </div>
+                <div class="float-card fc-2">
+                    <div class="fc-icon"><i class="fa-solid fa-tags" style="color: #3b82f6;"></i></div>
+                    <span class="fc-text">Best Offers</span>
+                </div>
+                <div class="float-card fc-3">
+                    <div class="fc-icon"><i class="fa-solid fa-map-location-dot" style="color: #f59e0b;"></i></div>
+                    <span class="fc-text">Live Tracking</span>
+                </div>
+                <div class="float-card fc-4">
+                    <div class="fc-icon"><i class="fa-solid fa-gift" style="color: #ec4899;"></i></div>
+                    <span class="fc-text">Gift Cards</span>
+                </div>
+                <div class="float-card fc-5">
+                    <div class="fc-icon"><i class="fa-solid fa-star" style="color: #eab308;"></i></div>
+                    <span class="fc-text">Top Experts</span>
+                </div>
+                <div class="float-card fc-6">
+                    <div class="fc-icon"><i class="fa-solid fa-bolt" style="color: #8b5cf6;"></i></div>
+                    <span class="fc-text">Fast Service</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <h2><i>ProLocal</i></h2>
+                </div>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>ProLocal</h4>
+                    <ul>
+                        <li><a href="info.html?p=who-we-are">Who We Are</a></li>
+                        <li><a href="info.html?p=blog">Blog</a></li>
+                        <li><a href="info.html?p=work-with-us">Work With Us</a></li>
+                        <li><a href="info.html?p=investor-relations">Investor Relations</a></li>
+                        <li><a href="info.html?p=report-fraud">Report Fraud</a></li>
+                        <li><a href="info.html?p=contact-us">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>For Professionals</h4>
+                    <ul>
+                        <li><a href="info.html?p=partner-us">Partner With Us</a></li>
+                        <li><a href="info.html?p=apps-for-you">Apps For You</a></li>
+                        <li><a href="info.html?p=consulting">Consulting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>For Enterprises</h4>
+                    <ul>
+                        <li><a href="enterprise-partner.html" target="_blank">Partner With Us</a></li>
+                        <li><a href="info.html?p=corporate-services">Corporate Services</a></li>
+                        <li><a href="enterprise-partner.html" target="_blank">Enterprises Website</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Learn More</h4>
+                    <ul>
+                        <li><a href="info.html?p=privacy">Privacy</a></li>
+                        <li><a href="info.html?p=security">Security</a></li>
+                        <li><a href="info.html?p=terms">Terms of Service</a></li>
+                        <li><a href="info.html?p=help">Help & Support</a></li>
+                        <li><a href="info.html?p=sitemap">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col social-col">
+                    <h4>Social Links</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                    <div class="app-links">
+                        <a href="#" class="app-btn">
+                            <i class="fa-brands fa-apple"></i>
+                            <div class="app-text">
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fa-brands fa-google-play"></i>
+                            <div class="app-text">
+                                <span>GET IT ON</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="footer-bottom">
+                <p>By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and
+                    Content Policies. All trademarks are properties of their respective owners.<br>2008-2026 &copy;
+                    ProLocal&trade; Ltd. All rights reserved.</p>
+                <p style="text-align: center; margin-top: 15px; font-weight: 500; color: #8c8c8c;">Designed and
+                    developed with &hearts; by Diwakar</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js?v=3"></script>
+
+    <!-- Auth Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content zomato-modal">
+            <div class="modal-header-zomato">
+                <h2 id="modalTitle">Login</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+
+            <form id="loginForm">
+                <div id="registerFields" style="display:none;">
+                    <input type="text" id="registerName" placeholder="Full Name"
+                        style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    <div style="position: relative; margin-bottom: 15px;">
+                        <i class="fa-solid fa-location-dot"
+                            style="position: absolute; right: 15px; top: 15px; color: var(--primary-color);"></i>
+                        <input type="text" id="registerPincode" placeholder="Pincode / Location"
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    </div>
+                </div>
+
+                <div class="phone-input-group">
+                    <div class="country-code">
+                        <img src="https://flagcdn.com/w20/in.png" alt="India Flag">
+                        <span>+91</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="divider-vertical"></div>
+                    <input type="tel" id="loginPhone" placeholder="Phone" required>
+                </div>
+
+                <button type="submit" class="zomato-btn-primary" id="authSubmitBtn">Send One Time Password</button>
+            </form>
+
+            <div class="zomato-divider">
+                <span>or</span>
+            </div>
+
+            <button class="zomato-btn-secondary">
+                <i class="fa-solid fa-envelope" style="color: #ef4f5f;"></i> Continue with Email
+            </button>
+
+            <button class="zomato-btn-secondary">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google"
+                    style="width: 18px; margin-right: 5px;"> Sign in with Google
+            </button>
+
+            <hr class="zomato-hr">
+
+            <div class="zomato-footer-text" id="authToggleText">
+                New to ProLocal? <a href="#" id="toggleAuthMode">Create account</a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Home Pincode Modal -->
+    <div id="homePincodeModal" class="zomato-modal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+        <div class="zomato-modal-content"
+            style="background:var(--bg-main, #fff); padding:40px; border-radius:16px; max-width:450px; width:90%; position:relative; box-shadow: 0 15px 40px rgba(0,0,0,0.2);">
+            <span class="zomato-close-modal" id="closeHomePincode"
+                style="position:absolute; top:20px; right:20px; font-size:1.5rem; cursor:pointer;">&times;</span>
+
+            <div style="text-align: center; margin-bottom: 25px;">
+                <i class="fa-solid fa-location-dot" style="font-size: 3rem; color: #ef4f5f; margin-bottom: 15px;"></i>
+                <h2 style="font-size: 1.6rem; color: var(--text-main, #333); margin-bottom: 10px;">Find <span
+                        id="homeModalServiceName" style="color:#ef4f5f"></span> Near You</h2>
+                <p style="color: var(--text-muted, #666); font-size: 0.95rem;">Enter your pincode or location to see
+                    experts nearby.</p>
+            </div>
+
+            <form id="homePincodeForm" style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="zomato-input-group" style="position: relative; margin: 0; display:flex;">
+                    <i class="fa-solid fa-crosshairs"
+                        style="position: absolute; right: 15px; top: 15px; color: #ef4f5f; cursor: pointer; transition: transform 0.3s;"
+                        title="Detect Live Location"
+                        onclick="this.style.transform='rotate(180deg)'; window.detectLiveLocation('homePincodeInput'); setTimeout(() => this.style.transform='none', 1000);"></i>
+                    <input type="text" id="homePincodeInput" placeholder="Enter Pincode / Location" required
+                        style="width: 100%; padding: 15px 40px 15px 15px; border-radius: 8px; border: 1px solid var(--border-color, #ccc); font-size: 1rem; background: var(--bg-alt, #fafafa); color: var(--text-main, #333);">
+                </div>
+                <button type="submit" class="zomato-btn-primary"
+                    style="margin-top: 10px; width: 100%; padding: 15px; font-size: 1.1rem; border-radius: 8px; background: #ef4f5f; color: #fff; border:none; cursor:pointer;">Explore
+                    Near Me</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        let pendingService = '';
+        const homeModal = document.getElementById('homePincodeModal');
+        const homeModalClose = document.getElementById('closeHomePincode');
+
+        // Check if there is an existing pincode to display
+        const existingPin = localStorage.getItem('userPincode');
+        if (existingPin && document.getElementById('currentPincodeLabel')) {
+            document.getElementById('currentPincodeLabel').textContent = existingPin;
+        }
+
+        function changePincodeGeneral() {
+            pendingService = 'All Services';
+            document.getElementById('homeModalServiceName').textContent = 'Any';
+            if (localStorage.getItem('userPincode')) {
+                document.getElementById('homePincodeInput').value = localStorage.getItem('userPincode');
+            } else {
+                document.getElementById('homePincodeInput').value = '';
+                if (window.detectLiveLocation) window.detectLiveLocation('homePincodeInput');
+            }
+            homeModal.style.display = 'flex';
+        }
+
+        function openPincodeModal(serviceName) {
+            pendingService = serviceName;
+            document.getElementById('homeModalServiceName').textContent = serviceName;
+            const savedPincode = localStorage.getItem('userPincode');
+            if (savedPincode) {
+                document.getElementById('homePincodeInput').value = savedPincode;
+            } else {
+                document.getElementById('homePincodeInput').value = '';
+                if (window.detectLiveLocation) window.detectLiveLocation('homePincodeInput');
+            }
+            homeModal.style.display = 'flex';
+        }
+
+        if (homeModalClose) {
+            homeModalClose.onclick = () => {
+                homeModal.style.display = 'none';
+            }
+            window.addEventListener('click', (e) => {
+                if (e.target === homeModal) homeModal.style.display = 'none';
+            });
+        }
+
+        const homePincodeForm = document.getElementById('homePincodeForm');
+        if (homePincodeForm) {
+            homePincodeForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const val = document.getElementById('homePincodeInput').value.trim();
+                if (val) {
+                    localStorage.setItem('userPincode', val);
+
+                    // Update UI immediately if they were just changing pincode without navigating
+                    if (pendingService === 'All Services') {
+                        document.getElementById('currentPincodeLabel').textContent = val;
+                        homeModal.style.display = 'none';
+                    } else {
+                        // Navigate if they clicked a service
+                        homeModal.style.display = 'none';
+                        window.location.href = 'service-providers.html?service=' + encodeURIComponent(pendingService);
+                    }
+                }
+            });
+        }
+
+        // Automatic "Round by Round" Carousal for Quick Categories
+        const categoriesGrid = document.querySelector('.quick-categories-grid');
+        if (categoriesGrid) {
+            // Duplicate content to create an infinite loop effect
+            categoriesGrid.innerHTML += categoriesGrid.innerHTML;
+            let scrollInterval;
+
+            const startScroll = () => {
+                scrollInterval = setInterval(() => {
+                    categoriesGrid.scrollLeft += 1;
+                    // Reset scroll to 0 seamlessly when halfway (the end of the first original list)
+                    if (categoriesGrid.scrollLeft >= (categoriesGrid.scrollWidth / 2)) {
+                        categoriesGrid.scrollLeft = 0;
+                    }
+                }, 25); // Speed multiplier
+            };
+
+            const stopScroll = () => clearInterval(scrollInterval);
+
+            startScroll(); // start automatic rotation
+
+            categoriesGrid.addEventListener('mouseenter', stopScroll); // pause on hover
+            categoriesGrid.addEventListener('mouseleave', startScroll); // resume on leave
+            categoriesGrid.addEventListener('touchstart', stopScroll, { passive: true });
+            categoriesGrid.addEventListener('touchend', startScroll);
+        }
+    </script>
+</body>
+
+</html>

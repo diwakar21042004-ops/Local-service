@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProLocal | Information</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="navbar" style="position: relative; background: var(--nav-bg); padding: 15px 0;">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none; color:inherit;"><i class="fa-solid fa-wrench"></i> ProLocal</a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Back to Home</a>
+            </nav>
+            <div class="nav-actions" style="display:flex; gap:10px; align-items:center;">
+                <button id="darkModeToggle" class="btn-icon" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" style="min-height: 60vh; background: var(--bg-main); padding-top: 80px;">
+        <div class="container">
+            <div class="contact-card" style="box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: left; display: block; padding: 40px; background: var(--bg-alt); border-radius: 20px;">
+                <h1 id="pageTitle" style="color: var(--primary-color); margin-bottom: 20px; font-size: 2.5rem;">Loading...</h1>
+                <div id="pageContent" style="color: var(--text-main); font-size: 1.1rem; line-height: 1.8;">
+                    <p>Fetching content...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageKey = urlParams.get('p') || 'default';
+
+        // Dynamic content store
+        const pageData = {
+            'who-we-are': { title: 'Who We Are', content: 'ProLocal is the leading platform connecting customers with trusted professionals for all their home and business needs. Established in 2026, our mission is to make local services reliable and accessible.' },
+            'blog': { title: 'Official Blog', content: 'Welcome to the ProLocal blog. Here you will find regular updates, tips on home maintenance, professional development guides for our sellers, and enterprise case studies.' },
+            'work-with-us': { title: 'Careers', content: 'Join the ProLocal team! We are always looking for passionate engineers, designers, and operational leaders. Check back later for open positions.' },
+            'investor-relations': { title: 'Investor Relations', content: 'Our financial reports, quarterly earnings, and shareholder information can be found in our comprehensive investor portal.' },
+            'report-fraud': { title: 'Report Fraud', content: 'We take security seriously. If you have spotted a fraudulent listing or experienced suspicious behavior, please email safety@prolocal.com immediately.' },
+            'contact-us': { title: 'Contact Us', content: 'Get in touch with us at support@prolocal.com or call our 24/7 hotline at (555) 123-4567. We are located at 123 Service Blvd, Hometown, TX.' },
+            'partner-us': { title: 'Partner With Us', content: 'Become a ProLocal certified professional today. Enjoy flexible hours, secure payments, and a steady stream of jobs direct to your mobile app.' },
+            'apps-for-you': { title: 'Download Our Apps', content: 'Whether you are a customer or a professional, we have native applications for both iOS and Android to streamline your entire experience.' },
+            'consulting': { title: 'Consulting Services', content: 'Our expert consulting team can help your small business optimize local service delivery and improve your customer satisfaction scores.' },
+            'corporate-services': { title: 'Corporate Services', content: 'ProLocal provides dedicated account managers and bulk service discounts for our corporate clients. Reduce your operational overhead with us.' },
+            'privacy': { title: 'Privacy Policy', content: 'Your data is strictly encrypted. We do not sell your personal information to third parties. Read our full legal privacy notices here.' },
+            'security': { title: 'Security', content: 'Our servers are protected by SOC2 compliant infrastructure. All professionals undergo strict background checks before accessing our platform.' },
+            'terms': { title: 'Terms of Service', content: 'By using ProLocal, you agree to our standard terms of engagement and code of conduct. Professionalism is required at all times.' },
+            'help': { title: 'Help & Support', content: 'Trouble booking a service? Our 24/7 support team is here to help. Contact our live chat or email helpdesk@prolocal.com for immediate assistance.' },
+            'sitemap': { title: 'Sitemap', content: 'Directory listing of all ProLocal pages, services, categories, and regional portals.' },
+            'default': { title: 'Information', content: 'Welcome to the ProLocal information portal. Please select a valid link from the footer.' }
+        };
+
+        const data = pageData[pageKey] || pageData['default'];
+        document.getElementById('pageTitle').innerText = data.title;
+        document.getElementById('pageContent').innerHTML = '<p>' + data.content + '</p>';
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

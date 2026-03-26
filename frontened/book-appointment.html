@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | ProLocal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: var(--bg-alt);
+            /* New Theme Premium Background */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(239, 79, 95, 0.08) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, rgba(249, 115, 22, 0.08) 0, transparent 50%), 
+                radial-gradient(at 100% 100%, rgba(239, 79, 95, 0.05) 0, transparent 50%), 
+                radial-gradient(at 0% 100%, rgba(249, 115, 22, 0.05) 0, transparent 50%);
+            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+        }
+
+        .booking-hero {
+            background: linear-gradient(135deg, rgba(239, 79, 95, 0.05), var(--bg-alt));
+            padding: 100px 0 120px;
+            text-align: center;
+            color: var(--text-main);
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .booking-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .booking-hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .booking-container {
+            max-width: 800px;
+            margin: -80px auto 80px;
+            background: var(--bg-main);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .provider-summary {
+            background: rgba(249, 115, 22, 0.05);
+            padding: 30px 40px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .provider-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .provider-summary-text h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.4rem;
+            color: var(--text-main);
+        }
+
+        .provider-summary-text p {
+            margin: 0;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .booking-form {
+            padding: 40px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-section h4 i {
+            color: var(--primary-color);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-alt);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+            background: var(--bg-main);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .booking-footer {
+            margin: 30px 40px 40px;
+            padding: 25px 35px;
+            /* Modern glassmorphism with better color contrast */
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(239, 79, 95, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .price-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .price-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .price-value {
+            font-size: 1.5rem;
+            color: #ef4f5f; /* Specific vibrant shade */
+            font-weight: 900;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ef4f5f 0%, #f97316 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(239, 79, 95, 0.3);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.03) translateY(-3px);
+            box-shadow: 0 15px 35px rgba(239, 79, 95, 0.4);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            position: absolute;
+            top: 30px;
+            left: 5%;
+            padding: 10px 20px;
+            background: var(--bg-main);
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .back-link:hover {
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .booking-container {
+                margin: -60px 15px 40px;
+            }
+            .booking-footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                margin: 20px;
+                padding: 25px;
+            }
+            .submit-btn {
+                width: 100%;
+            }
+            .booking-hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar" style="background: var(--nav-bg);">
+        <div class="container nav-content">
+            <a href="index.html" class="logo" style="text-decoration:none;">
+                <i class="fa-solid fa-wrench"></i> ProLocal
+            </a>
+            <div class="nav-actions">
+                <button id="darkModeToggle" class="btn-icon" aria-label="Toggle Dark Mode" style="background:transparent; border:none; color:var(--text-main);">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="booking-hero">
+        <a href="javascript:history.back()" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Providers</a>
+        <div class="container">
+            <h1>Finalize Your Booking</h1>
+            <p>Schedule your appointment securely in just a few steps.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="booking-container">
+            <div class="provider-summary">
+                <div class="provider-icon">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div class="provider-summary-text">
+                    <h3 id="displayProviderName">Selected Professional</h3>
+                    <p id="displayServiceType">Service Category</p>
+                </div>
+            </div>
+
+            <form class="booking-form" id="bookingPageForm">
+                
+                <div class="form-section">
+                    <h4><i class="fa-solid fa-calendar-day"></i> Date & Time</h4>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="bookDate">Select Date</label>
+                            <input type="date" id="bookDate" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="bookTime">Select Time Slot</label>
+                            <select id="bookTime" required>
+                                <option value="" disabled selected>Choose a slot</option>
+                                <option value="09:00 AM">09:00 AM - 11:00 AM</option>
+                                <option value="11:00 AM">11:00 AM - 01:00 PM</option>
+                                <option value="02:00 PM">02:00 PM - 04:00 PM</option>
+                                <option value="04:00 PM">04:00 PM - 06:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4><i class="fa-solid fa-location-dot"></i> Service Address</h4>
+                    <div class="input-group">
+                        <label for="bookAddress">Complete Address</label>
+                        <input type="text" id="bookAddress" placeholder="House/Flat No., Street, Area" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="bookCity">City</label>
+                            <input type="text" id="bookCity" placeholder="City" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="bookPincode">Pincode</label>
+                            <input type="text" id="bookPincode" placeholder="e.g. 110001" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4><i class="fa-solid fa-circle-info"></i> Additional Details</h4>
+                    <div class="input-group">
+                        <label for="bookInstructions">Describe the issue or provide instructions (Optional)</label>
+                        <textarea id="bookInstructions" rows="4" placeholder="Briefly describe what needs to be fixed or done..."></textarea>
+                    </div>
+                </div>
+
+                <div class="booking-footer">
+                    <div class="price-summary">
+                        <span class="price-label">Service Estimate:</span>
+                        <span class="price-value" id="priceValue">Standard Rates</span>
+                    </div>
+                    <button type="submit" class="submit-btn" id="confirmBtn">Confirm Booking <i class="fa-solid fa-check" style="margin-left: 8px;"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle
+            const toggleButton = document.getElementById('darkModeToggle');
+            const toggleIcon = toggleButton.querySelector('i');
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                if(toggleIcon) toggleIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+            if(toggleButton) {
+                toggleButton.addEventListener('click', () => {
+                    let theme = document.documentElement.getAttribute('data-theme');
+                    if (theme === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                        localStorage.setItem('theme', 'light');
+                        toggleIcon.classList.replace('fa-sun', 'fa-moon');
+                    } else {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        toggleIcon.classList.replace('fa-moon', 'fa-sun');
+                    }
+                });
+            }
+
+            // Url params
+            const urlParams = new URLSearchParams(window.location.search);
+            const providerName = urlParams.get('provider') || 'ProLocal Expert';
+            const serviceCat = urlParams.get('service') || 'General Service';
+
+            document.getElementById('displayProviderName').textContent = providerName;
+            document.getElementById('displayServiceType').textContent = serviceCat;
+
+            
+
+            // Form Submit
+            document.getElementById('bookingPageForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('confirmBtn');
+                const origText = btn.innerHTML;
+                btn.innerHTML = 'Confirming... <i class="fa-solid fa-spinner fa-spin"></i>';
+                btn.disabled = true;
+
+                const booking = {
+                    provider: providerName,
+                    service: serviceCat,
+                    date: document.getElementById('bookDate').value,
+                    time: document.getElementById('bookTime').value,
+                    address: document.getElementById('bookAddress').value,
+                    status: 'Upcoming',
+                    id: 'BKG-' + Math.floor(Math.random() * 100000)
+                };
+                let bookings = JSON.parse(localStorage.getItem('myBookings')) || [];
+                bookings.unshift(booking);
+                localStorage.setItem('myBookings', JSON.stringify(bookings));
+
+                setTimeout(() => {
+                    alert('Your appointment has been successfully booked with ' + providerName + '!');
+                    window.location.href = 'my-bookings.html';
+                }, 1200);
+            });
+        });
+    </script>
+</body>
+</html>
