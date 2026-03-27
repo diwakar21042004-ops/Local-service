@@ -271,10 +271,10 @@
                 </div>
                 <p class="login-subtitle">Sign in to your enterprise dashboard</p>
 
-                <form action="enterprise-dashboard.html" onsubmit="event.preventDefault(); alert('Login successful! Redirecting to Enterprise Dashboard...'); location.href='enterprise-dashboard.html';">
+                <form id="enterpriseSignInForm">
                     <div class="input-group">
-                        <input type="text" id="loginEmail" required placeholder=" ">
-                        <label for="loginEmail">Email Address or Phone Number</label>
+                        <input type="email" id="loginEmail" required placeholder=" " pattern=".*@gmail\.com$" title="Appka address @gmail.com se end hona chahiye">
+                        <label for="loginEmail">Enter Gmail Account (@gmail.com)</label>
                     </div>
                     <div class="input-group">
                         <input type="password" id="loginPassword" required placeholder=" ">
@@ -282,12 +282,102 @@
                     </div>
 
                     <button type="submit" class="login-btn">Secure Login <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></button>
-                    <a href="#" class="forgot-password">Forgot password?</a>
+                    <a href="javascript:void(0)" onclick="toggleOtpMode(true)" class="forgot-password" style="margin-top: 15px;">Login with Mobile OTP instead</a>
                 </form>
 
-                <div class="divider">
-                    <span>OR</span>
-                </div>
+                <form id="mobileOtpForm" style="display: none;">
+                    <div class="input-group">
+                        <input type="tel" id="loginMobile" required placeholder=" " maxlength="10">
+                        <label for="loginMobile">Registered Mobile Number</label>
+                    </div>
+                    <div class="input-group" id="otpGroup" style="display: none;">
+                        <input type="text" id="loginOtp" placeholder=" " maxlength="6" pattern="\d{6}" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                        <label for="loginOtp">Enter 6-digit OTP</label>
+                    </div>
+
+                    <button type="button" class="login-btn" id="sendOtpBtn" onclick="sendOtp()">Get OTP <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i></button>
+                    <button type="submit" class="login-btn" id="verifyOtpBtn" style="display: none;">Verify & Login <i class="fa-solid fa-check" style="margin-left: 8px;"></i></button>
+                    <a href="javascript:void(0)" onclick="toggleOtpMode(false)" class="forgot-password" style="margin-top: 15px;">Back to Email Login</a>
+                </form>
+
+                <script>
+                    document.getElementById('enterpriseSignInForm').addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const email = document.getElementById('loginEmail').value;
+                        const password = document.getElementById('loginPassword').value;
+                        const regEmail = localStorage.getItem('entRegEmail');
+                        const regPassword = localStorage.getItem('entRegPassword');
+                        
+                        if (email.indexOf('@gmail.com') === -1) {
+                            alert('Error: Login sirf @gmail.com accounts ke liye allowed hai.');
+                            return;
+                        }
+                        if (!regEmail) {
+                            alert('Action Required: Aapne abhi tak koi business register nahi kiya hai. Pehle naya business register karein!');
+                            location.href = 'enterprise-partner.html#register';
+                            return;
+                        }
+                        if (email !== regEmail) {
+                            alert('Unauthorized Email: Yeh email registered nahi hai. Kripya wahi Gmail account dalein jisse aapne register kiya tha. (Hint: ' + regEmail + ')');
+                            return;
+                        }
+                        if (regPassword && password !== regPassword) {
+                            alert('Unauthorized Password: Aapka password galat hai. Wahi password dalein jo registration ke waqt banaya tha.');
+                            return;
+                        }
+                        
+                        alert('Authentication verified! Redirecting to your Enterprise Dashboard...');
+                        location.href = 'enterprise-dashboard.html';
+                    });
+
+                    function toggleOtpMode(showOtp) {
+                        document.getElementById('enterpriseSignInForm').style.display = showOtp ? 'none' : 'block';
+                        document.getElementById('mobileOtpForm').style.display = showOtp ? 'block' : 'none';
+                    }
+
+                    let simulatedOtp = "";
+
+                    function sendOtp() {
+                        const mobile = document.getElementById('loginMobile').value;
+                        const regPhone = localStorage.getItem('entRegPhone');
+
+                        if (!mobile || mobile.length !== 10) {
+                            alert("Kripya 10 digit ka sahi mobile number dalein.");
+                            return;
+                        }
+
+                        if (!regPhone) {
+                            alert("Security Check: Hamare database me koi registered mobile number nahi mila. Kripya pehle naya Business Register form bharein, uske baad login try karein.");
+                            return;
+                        }
+                        
+                        if (mobile !== regPhone) {
+                            alert("Unauthorized Mobile: Yeh mobile number registered nahi hai. Kripya wahi number dalein jo aapne register karte waqt diya tha.");
+                            return;
+                        }
+
+                        simulatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+                        alert("OTP Sent Successfully to " + mobile + "\n\n(Testing Mode 6-Digit OTP: " + simulatedOtp + ")");
+                        
+                        document.getElementById('loginMobile').readOnly = true;
+                        document.getElementById('sendOtpBtn').style.display = 'none';
+                        document.getElementById('otpGroup').style.display = 'block';
+                        document.getElementById('verifyOtpBtn').style.display = 'block';
+                    }
+
+                    document.getElementById('mobileOtpForm').addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const enteredOtp = document.getElementById('loginOtp').value;
+                        if (!enteredOtp || enteredOtp !== simulatedOtp) {
+                            alert("Invalid OTP! Kripya sahi OTP dalein.");
+                            return;
+                        }
+                        alert('OTP Verified! Redirecting to your Enterprise Dashboard...');
+                        location.href = 'enterprise-dashboard.html';
+                    });
+                </script>
+
+
 
                 <p class="create-account">Don't have an enterprise account?<a href="enterprise-partner.html#register">Register here</a></p>
             </div>

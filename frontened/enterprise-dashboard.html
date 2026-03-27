@@ -377,7 +377,7 @@
         <!-- Topbar -->
         <header class="topbar">
             <div class="topbar-greeting">
-                <h2>Welcome back, diwakar!</h2>
+                <h2 id="welcomeText">Welcome back, Partner!</h2>
                 <p>Here's what's happening with your business today.</p>
             </div>
             <div class="topbar-actions">
@@ -389,8 +389,8 @@
                     <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
                         alt="Admin" class="profile-img">
                     <div class="profile-info">
-                        <strong>Diwakar</strong>
-                        <span>Admin</span>
+                        <strong id="topbarName">Admin</strong>
+                        <span id="topbarRole">Enterprise Partner</span>
                     </div>
                 </div>
             </div>
@@ -501,6 +501,14 @@
         </div>
     </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bizName = localStorage.getItem('entBusinessName');
+            const ownerName = localStorage.getItem('entOwnerName');
+            if (bizName) document.getElementById('welcomeText').innerText = 'Welcome back, ' + bizName + '!';
+            if (ownerName) document.getElementById('topbarName').innerText = ownerName;
+        });
+    </script>
 </body>
 
 </html>

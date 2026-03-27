@@ -317,6 +317,37 @@
                 </div>
 
                 <div class="form-section">
+                    <h4><i class="fa-solid fa-phone"></i> Contact Details</h4>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="bookMobile">Mobile Number</label>
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <span style="position: absolute; left: 15px; font-weight: 600; color: var(--text-muted); border-right: 1px solid var(--border-color); padding-right: 8px;">+91</span>
+                                <input type="tel" id="bookMobile" placeholder="9876543210" maxlength="10" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); window.checkPhones && window.checkPhones();" required style="padding-left: 65px;">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="bookAltMobile">Alternate Mobile No. (Optional)</label>
+                            <div style="position: relative; display: flex; align-items: center;">
+                                <span style="position: absolute; left: 15px; font-weight: 600; color: var(--text-muted); border-right: 1px solid var(--border-color); padding-right: 8px;">+91</span>
+                                <input type="tel" id="bookAltMobile" placeholder="9876543210" maxlength="10" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); window.checkPhones && window.checkPhones();" style="padding-left: 65px;">
+                            </div>
+                        </div>
+                        <script>
+                            window.checkPhones = function() {
+                                const main = document.getElementById('bookMobile');
+                                const alt = document.getElementById('bookAltMobile');
+                                if (main.value && alt.value && main.value === alt.value) {
+                                    alt.setCustomValidity('Alternate Mobile Number cannot be exactly same as Primary Mobile Number');
+                                } else {
+                                    alt.setCustomValidity(''); 
+                                }
+                            };
+                        </script>
+                    </div>
+                </div>
+
+                <div class="form-section">
                     <h4><i class="fa-solid fa-location-dot"></i> Service Address</h4>
                     <div class="input-group">
                         <label for="bookAddress">Complete Address</label>
@@ -325,11 +356,11 @@
                     <div class="form-row">
                         <div class="input-group">
                             <label for="bookCity">City</label>
-                            <input type="text" id="bookCity" placeholder="City" required>
+                            <input type="text" id="bookCity" placeholder="City" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" required>
                         </div>
                         <div class="input-group">
                             <label for="bookPincode">Pincode</label>
-                            <input type="text" id="bookPincode" placeholder="e.g. 110001" required>
+                            <input type="text" id="bookPincode" placeholder="e.g. 110001" maxlength="6" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                         </div>
                     </div>
                 </div>
@@ -386,7 +417,17 @@
             document.getElementById('displayProviderName').textContent = providerName;
             document.getElementById('displayServiceType').textContent = serviceCat;
 
-            
+            // Set Date Input Constraints: No past dates & max 4-digit year
+            const dateInput = document.getElementById('bookDate');
+            if (dateInput) {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                
+                dateInput.min = `${yyyy}-${mm}-${dd}`;
+                dateInput.max = "9999-12-31";
+            }
 
             // Form Submit
             document.getElementById('bookingPageForm').addEventListener('submit', (e) => {

@@ -29,8 +29,7 @@
                 <div class="profile-dropdown">
                     <button class="profile-btn" id="profileBtn" onclick="window.location.href='enterprise-login.html';"
                         style="border: none; background: transparent; padding: 10px; font-weight: 500; font-size: 1.05rem; cursor: pointer;">
-                        <i class="fa-regular fa-circle-user" style="font-size: 1.3rem;"></i> <span
-                            id="profileName">Login</span>
+                        <i class="fa-regular fa-circle-user" style="font-size: 1.3rem;"></i> <span>Login</span>
                     </button>
                 </div>
             </div>
@@ -621,7 +620,7 @@
                 </div>
 
                 <form
-                    onsubmit="event.preventDefault(); alert('Registration submitted successfully! Our verification team will contact you shortly. Redirecting to login...'); this.reset(); location.href='enterprise-login.html';">
+                    onsubmit="event.preventDefault(); localStorage.setItem('entBusinessName', document.getElementById('businessName').value); localStorage.setItem('entOwnerName', document.getElementById('ownerFirst').value + ' ' + document.getElementById('ownerLast').value); localStorage.setItem('entRegEmail', document.getElementById('businessEmail').value); localStorage.setItem('entRegPassword', document.getElementById('businessPassword').value); localStorage.setItem('entRegPhone', document.getElementById('businessPhone').value); alert('Registration processing... Your business profile has been locally created. Redirecting to login...'); this.reset(); location.href='enterprise-login.html';">
                     <div class="input-group">
                         <input type="text" id="businessName" required>
                         <label for="businessName">Business or Company Name</label>
@@ -641,6 +640,11 @@
                     <div class="input-group">
                         <input type="email" id="businessEmail" required>
                         <label for="businessEmail">Business Email Address</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="businessPassword" required>
+                        <label for="businessPassword">Create Password</label>
                     </div>
 
                     <div class="input-group">

@@ -248,12 +248,25 @@
                 `;
             } else {
                 let html = '';
+                const tzOffset = (new Date()).getTimezoneOffset() * 60000;
+                const localTodayStr = (new Date(Date.now() - tzOffset)).toISOString().split('T')[0];
+
                 bookings.forEach(bkg => {
+                    let currentStatus = bkg.status || 'Upcoming';
+                    let badgeStyle = '';
+                    let icon = 'fa-clock';
+
+                    if (bkg.date && bkg.date < localTodayStr) {
+                        currentStatus = 'Expired';
+                        badgeStyle = 'background: rgba(239, 79, 95, 0.1); color: #ef4f5f;';
+                        icon = 'fa-calendar-xmark';
+                    }
+
                     html += `
                         <div class="booking-card">
                             <div class="booking-header">
                                 <span class="booking-id">ID: ${bkg.id || 'BKG-0000'}</span>
-                                <span class="status-badge"><i class="fa-solid fa-clock"></i> ${bkg.status || 'Upcoming'}</span>
+                                <span class="status-badge" style="${badgeStyle}"><i class="fa-solid ${icon}"></i> ${currentStatus}</span>
                             </div>
                             <div class="booking-body">
                                 <div class="detail-item">
